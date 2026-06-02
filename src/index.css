@@ -1,0 +1,130 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #008080; /* Teal backdrop just in case */
+    font-family: 'Tahoma', 'MS Sans Serif', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+}
+
+/* Classic Windows XP Title Bar Gradient */
+.xp-titlebar-blue {
+  background: linear-gradient(to right, #0058e6 0%, #3a93ff 10%, #0056e2 80%, #002c91 100%);
+}
+
+.xp-titlebar-silver {
+  background: linear-gradient(to right, #b4b0a5 0%, #e0ded7 10%, #b4b0a5 80%, #8c887d 100%);
+}
+
+.xp-titlebar-inactive {
+  background: linear-gradient(to right, #7697c7 0%, #8ea4d3 10%, #7697c7 80%, #5b71a2 100%);
+}
+
+/* WinXP Window Styles */
+.xp-window {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4),
+              inset 1.5px 1.5px 0px #ffffff,
+              inset -1.5px -1.5px 0px #0a0a0a,
+              inset 3px 3px 0px #dfdfdf,
+              inset -3px -3px 0px #868686;
+  background-color: #ECE9D8;
+  border: 4px solid #0055e5;
+  border-top-width: 3px;
+  border-radius: 8px 8px 0px 0px;
+}
+
+/* Classic Button borders */
+.xp-btn-classic {
+  box-shadow: inset 1px 1px 0px #ffffff, 
+              inset -1px -1px 0px #808080, 
+              1px 1px 1px rgba(0,0,0,0.4);
+  background: #ECE9D8;
+  border: 1px solid #7f7f7f;
+}
+
+.xp-btn-classic:active {
+  box-shadow: inset 1px 1px 0px #808080, 
+              inset -1px -1px 0px #ffffff;
+  background: #ECE9D8;
+}
+
+/* Taskbar Gradient */
+.xp-taskbar-gradient {
+  background: linear-gradient(to bottom, #245dd7 0%, #0e3cbc 12%, #114ee1 42%, #124fe3 57%, #0831a4 85%, #124fe3 100%);
+}
+
+/* Start Button Gradient */
+.xp-start-gradient {
+  background: linear-gradient(to bottom, #388e3c 0%, #4caf50 10%, #388e3c 40%, #1b5e20 80%, #2e7d32 100%);
+  box-shadow: inset 1px 1px 1px #81c784, 0px 1px 2px rgba(0,0,0,0.5);
+}
+
+.xp-start-gradient:hover {
+  background: linear-gradient(to bottom, #4caf50 0%, #81c784 10%, #4caf50 40%, #2e7d32 80%, #388e3c 100%);
+}
+
+/* Custom WebXP Scrollbar */
+::-webkit-scrollbar {
+  width: 16px;
+  height: 16px;
+}
+
+::-webkit-scrollbar-track {
+  background: #E0DFE3;
+  box-shadow: inset 1px 1px 0px #808080;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ECE9D8;
+  box-shadow: inset 1px 1px 0px #fff, inset -1px -1px 0px #808080;
+  border: 1px solid #7f7f7f;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #dfdbcb;
+}
+
+/* Windows XP style buttons */
+.xp-window-btn {
+  width: 21px;
+  height: 21px;
+  border: 1px solid #ffffff;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.4);
+}
+
+.xp-btn-close {
+  background: linear-gradient(180deg, #E2684B 0%, #D03D1A 40%, #B82500 100%);
+}
+.xp-btn-close:hover {
+  background: linear-gradient(180deg, #F38568 0%, #E2502C 40%, #D03D1A 100%);
+}
+
+.xp-btn-max {
+  background: linear-gradient(180deg, #5CA4E6 0%, #2671CA 40%, #1555B2 100%);
+}
+.xp-btn-max:hover {
+  background: linear-gradient(180deg, #7FBCFA 0%, #4592EB 40%, #216DC9 100%);
+}
+
+.xp-btn-min {
+  background: linear-gradient(180deg, #5CA4E6 0%, #2671CA 40%, #1555B2 100%);
+}
+.xp-btn-min:hover {
+  background: linear-gradient(180deg, #7FBCFA 0%, #4592EB 40%, #216DC9 100%);
+}
+
+
+/* Premium Lined Notepad Paper styling */
+.lined-paper {
+  background-color: #FFFFFA;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+  background-size: 100% 22px;
+  line-height: 22px;
+}
+
