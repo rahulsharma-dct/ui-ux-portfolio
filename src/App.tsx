@@ -134,7 +134,7 @@ export default function App() {
     const defaultApps: Record<string, Partial<WindowState>> = {
       about: { title: 'Notepad - About Jyoti', icon: '📝', initialWidth: 550, initialHeight: 400 },
       projects: { title: 'My Computer - Projects', icon: '💻', initialWidth: 620, initialHeight: 450 },
-      tools: { title: 'My Documents - Tools & Skills', icon: '📂', initialWidth: 500, initialHeight: 380 },
+      tools: { title: 'My Tools - Tools & Skills', icon: '📂', initialWidth: 500, initialHeight: 380 },
       feedback: { title: 'Outlook Express - Send Feedback', icon: '✉️', initialWidth: 580, initialHeight: 480 },
       minesweeper: { title: 'Minesweeper', icon: '💣', initialWidth: 280, initialHeight: 340 },
       paint: { title: 'untitled - Paint', icon: '🎨', initialWidth: 650, initialHeight: 480 },
@@ -213,7 +213,7 @@ export default function App() {
 
   const desktopIcons = [
     { id: 'projects', label: 'My Computer', icon: '💻' },
-    { id: 'tools', label: 'My Documents', icon: '📂' },
+    { id: 'tools', label: 'My Tools', icon: '📂' },
     { id: 'about', label: 'Notepad', icon: '📝' },
     { id: 'feedback', label: 'Outlook Express', icon: '✉️' },
     { id: 'paint', label: 'Paint', icon: '🎨' },
@@ -392,7 +392,7 @@ export default function App() {
                       </div>
                       <div className="p-2 space-y-2 text-[10.5px]">
                         <div className="cursor-pointer hover:underline text-[#002C91] flex items-center space-x-1" onClick={() => handleOpenApp('tools')}>
-                          <span>📂</span> <span>My Documents</span>
+                          <span>📂</span> <span>My Tools</span>
                         </div>
                         <div className="cursor-pointer hover:underline text-[#002C91] flex items-center space-x-1" onClick={() => handleOpenApp('about')}>
                           <span>📝</span> <span>About Notepad</span>
@@ -452,7 +452,7 @@ export default function App() {
                             <span>🌐</span> <span>Live Web Portals</span>
                           </h3>
                           <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                            {projects.filter(p => p.url).map((proj) => (
+                            {projects.filter(p => p.name !== 'Plantark' && p.name !== 'CRMS').map((proj) => (
                               <div
                                 key={proj.name}
                                 onClick={() => setSelectedProject(proj)}
@@ -473,7 +473,7 @@ export default function App() {
                             <span>🛠️</span> <span>Case Studies & Product Concepts</span>
                           </h3>
                           <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                            {projects.filter(p => !p.url).map((proj) => (
+                            {projects.filter(p => p.name === 'CRMS' || p.name === 'Plantark').map((proj) => (
                               <div
                                 key={proj.name}
                                 onClick={() => setSelectedProject(proj)}

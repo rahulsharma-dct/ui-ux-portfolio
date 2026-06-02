@@ -84,14 +84,14 @@ export const StartMenu: React.FC<StartMenuProps> = ({
               </div>
             </button>
 
-            {/* My Documents (Skills & Tools) */}
+            {/* My Tools (Skills & Tools) */}
             <button
               onClick={() => handleAppClick('tools')}
               className="w-full flex items-center p-2 rounded-[3px] hover:bg-[#316ac5] hover:text-white text-left group"
             >
               <div className="text-2xl mr-3">📂</div>
               <div>
-                <div className="font-bold text-[11.5px] text-[#000] group-hover:text-white">My Documents</div>
+                <div className="font-bold text-[11.5px] text-[#000] group-hover:text-white">My Tools</div>
                 <div className="text-[10px] text-gray-500 group-hover:text-gray-200">Design Tools & Skills</div>
               </div>
             </button>
@@ -260,7 +260,7 @@ export const StartMenu: React.FC<StartMenuProps> = ({
             className="w-full flex items-center p-1.5 rounded-[3px] hover:bg-[#316ac5] hover:text-white text-left group"
           >
             <span className="text-base mr-2.5">📂</span>
-            <span className="font-bold text-[#001c70] group-hover:text-white text-[11px]">My Documents</span>
+            <span className="font-bold text-[#001c70] group-hover:text-white text-[11px]">My Tools</span>
           </button>
 
           <button
