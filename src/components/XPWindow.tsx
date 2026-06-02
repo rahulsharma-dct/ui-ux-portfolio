@@ -143,8 +143,56 @@ export const XPWindow: React.FC<XPWindowProps> = ({
     };
   }, [isDragging, isResizing, resizeDirection]);
 
+  const [activeMenu, setActiveMenu] = useState<string | null>(null);
+
+  useEffect(() => {
+    const handleGlobalClick = () => {
+      setActiveMenu(null);
+    };
+    if (activeMenu) {
+      window.addEventListener('click', handleGlobalClick);
+    }
+    return () => {
+      window.removeEventListener('click', handleGlobalClick);
+    };
+  }, [activeMenu]);
+
   const toggleMaximize = () => {
     setIsMaximized(!isMaximized);
+  };
+
+  const menus: Record<string, { label: string; action?: () => void }[]> = {
+    File: [
+      { label: 'New', action: () => alert('New document created (mock).') },
+      { label: 'Open...', action: () => alert('Opening file dialog (mock).') },
+      { label: 'Save', action: () => alert('Saved successfully!') },
+      { label: 'Exit', action: onClose }
+    ],
+    Edit: [
+      { label: 'Undo', action: () => alert('Undo action (mock).') },
+      { label: 'Cut', action: () => alert('Copied and removed to clipboard (mock).') },
+      { label: 'Copy', action: () => alert('Copied to clipboard (mock).') },
+      { label: 'Paste', action: () => alert('Pasted from clipboard (mock).') },
+      { label: 'Select All', action: () => alert('All content selected.') }
+    ],
+    View: [
+      { label: 'Status Bar', action: () => alert('Status Bar toggled.') },
+      { label: 'Refresh', action: () => alert('Content refreshed.') },
+      { label: isMaximized ? 'Restore' : 'Maximize', action: toggleMaximize }
+    ],
+    Favorites: [
+      { label: 'Add to Favorites...', action: () => alert('Added to Favorites!') },
+      { label: 'Organize Favorites...', action: () => alert('Opening Favorites organizer.') }
+    ],
+    Tools: [
+      { label: 'Folder Options...', action: () => alert('Opening Folder settings.') },
+      { label: 'System Properties', action: () => alert('System: Windows XP Professional') }
+    ],
+    Help: [
+      { label: 'Help Topics', action: () => alert('Showing classic help index.') },
+      { label: 'About Windows XP', action: () => alert('Windows XP Professional. Created as a custom portfolio for Jyoti Dhiman.') },
+      { label: 'About Designer', action: () => alert('Jyoti Dhiman - UI/UX Designer with 1+ years experience in premium visual designs.') }
+    ]
   };
 
   const style: React.CSSProperties = isMaximized
@@ -230,13 +278,40 @@ export const XPWindow: React.FC<XPWindowProps> = ({
       </div>
 
       {/* Menu bar / Toolbar placeholder if needed */}
-      <div className="flex bg-[#ECE9D8] px-2 py-1 border-b border-[#C0C0C0] text-[11px] space-x-3 text-[#000] font-sans">
-        <span className="cursor-pointer hover:bg-[#316ac5] hover:text-white px-1">File</span>
-        <span className="cursor-pointer hover:bg-[#316ac5] hover:text-white px-1">Edit</span>
-        <span className="cursor-pointer hover:bg-[#316ac5] hover:text-white px-1">View</span>
-        <span className="cursor-pointer hover:bg-[#316ac5] hover:text-white px-1">Favorites</span>
-        <span className="cursor-pointer hover:bg-[#316ac5] hover:text-white px-1">Tools</span>
-        <span className="cursor-pointer hover:bg-[#316ac5] hover:text-white px-1">Help</span>
+      <div className="flex bg-[#ECE9D8] px-2 py-1 border-b border-[#C0C0C0] text-[11px] space-x-3 text-[#000] font-sans relative z-50">
+        {Object.keys(menus).map((menuName) => (
+          <div
+            key={menuName}
+            className="relative"
+            onClick={(e) => {
+              e.stopPropagation();
+              setActiveMenu(activeMenu === menuName ? null : menuName);
+            }}
+          >
+            <span className={`cursor-pointer px-1.5 py-0.5 rounded-[2px] block ${activeMenu === menuName ? 'bg-[#316ac5] text-white' : 'hover:bg-[#316ac5] hover:text-white'}`}>
+              {menuName}
+            </span>
+            {activeMenu === menuName && (
+              <div 
+                className="absolute left-0 mt-0.5 bg-[#ECE9D8] border-2 border-white border-r-[#808080] border-b-[#808080] shadow-md py-0.5 z-50 min-w-[140px] font-sans text-[11px] text-black"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {menus[menuName].map((item, idx) => (
+                  <div
+                    key={idx}
+                    onClick={() => {
+                      setActiveMenu(null);
+                      if (item.action) item.action();
+                    }}
+                    className="px-4 py-1 hover:bg-[#316ac5] hover:text-white cursor-pointer"
+                  >
+                    {item.label}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        ))}
       </div>
 
       {/* Content Area */}

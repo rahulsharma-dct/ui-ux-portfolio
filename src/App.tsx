@@ -317,7 +317,7 @@ export default function App() {
               <div className="flex-grow flex flex-col h-full bg-[#FFFFFA] text-black">
                 {/* Clean, authentic lined paper writing sheet */}
                 <div className="flex-grow p-5 overflow-auto lined-paper font-mono text-[12.5px] leading-[22px]">
-                  <div className="max-w-2xl mx-auto space-y-4">
+                  <div className="w-full space-y-4">
                     <h1 className="text-base font-bold font-sans text-xp-blue-dark border-b border-gray-200 pb-1 mb-2">
                       welcome_note.txt - Notepad
                     </h1>
@@ -379,7 +379,7 @@ export default function App() {
                           <span>📁</span> <span className="font-semibold">All Projects</span>
                         </div>
                         <div className="cursor-pointer hover:underline text-[#002C91] flex items-center space-x-1" onClick={() => handleOpenApp('feedback')}>
-                          <span>✉️</span> <span className="font-semibold">Contact Designer</span>
+                          <span>✉️</span> <span className="font-semibold">Contact Me</span>
                         </div>
                       </div>
                     </div>
@@ -395,7 +395,7 @@ export default function App() {
                           <span>📂</span> <span>My Tools</span>
                         </div>
                         <div className="cursor-pointer hover:underline text-[#002C91] flex items-center space-x-1" onClick={() => handleOpenApp('about')}>
-                          <span>📝</span> <span>About Notepad</span>
+                          <span>📝</span> <span>About Me</span>
                         </div>
                       </div>
                     </div>
