@@ -29,10 +29,11 @@ export const TicTacToe: React.FC = () => {
 
   // Clippy AI Move
   useEffect(() => {
+    let timer: ReturnType<typeof setTimeout> | undefined;
     if (!isPlayerTurn && !winner && !isDraw) {
       setClippySpeech("Let me think... My paperclip gears are spinning!");
       
-      const timer = setTimeout(() => {
+      timer = setTimeout(() => {
         const bestMove = getBestMove(board);
         const newBoard = [...board];
         newBoard[bestMove] = 'O';
@@ -61,9 +62,10 @@ export const TicTacToe: React.FC = () => {
           setClippySpeech(taunts[Math.floor(Math.random() * taunts.length)]);
         }
       }, 800);
-
-      return () => clearTimeout(timer);
     }
+    return () => {
+      if (timer) clearTimeout(timer);
+    };
   }, [isPlayerTurn, board, winner, isDraw]);
 
   // MiniMax Algorithm for AI

@@ -4,7 +4,6 @@ type Direction = 'UP' | 'DOWN' | 'LEFT' | 'RIGHT';
 type Position = { x: number; y: number };
 
 export const Snake: React.FC = () => {
-  const GRID_SIZE = 20;
   const CELL_COUNT = 15; // 15x15 Grid
 
   const [snake, setSnake] = useState<Position[]>([

@@ -58,7 +58,7 @@ export const Tetris: React.FC = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isGameOver, setIsGameOver] = useState(false);
   
-  const gameIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const gameIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   // Initialize and Reset Game
   const resetGame = () => {

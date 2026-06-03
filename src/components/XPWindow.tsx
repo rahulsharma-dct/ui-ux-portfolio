@@ -18,7 +18,6 @@ interface XPWindowProps {
 }
 
 export const XPWindow: React.FC<XPWindowProps> = ({
-  id,
   title,
   icon,
   onClose,

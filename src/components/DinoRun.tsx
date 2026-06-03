@@ -152,7 +152,6 @@ export const DinoRun: React.FC = () => {
           // Collisions checking
           const clippyRight = clippyX + clippyWidth;
           const clippyLeft = clippyX;
-          const clippyTop = clippyY.current;
           const clippyBottom = clippyY.current + clippyHeight;
 
           const obsLeft = obs.x;

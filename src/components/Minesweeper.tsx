@@ -82,13 +82,15 @@ export const Minesweeper: React.FC = () => {
 
   // Timer Effect
   useEffect(() => {
-    let interval: NodeJS.Timeout;
+    let interval: ReturnType<typeof setInterval> | undefined;
     if (isActive && !gameOver && !gameWon) {
       interval = setInterval(() => {
         setTimer((prev) => Math.min(prev + 1, 999));
       }, 1000);
     }
-    return () => clearInterval(interval);
+    return () => {
+      if (interval) clearInterval(interval);
+    };
   }, [isActive, gameOver, gameWon]);
 
   const revealCell = (r: number, c: number) => {
