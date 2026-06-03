@@ -21,7 +21,7 @@ export const Snake: React.FC = () => {
   });
   const [speed, setSpeed] = useState<number>(150); // Speed in ms
 
-  const gameLoopRef = useRef<NodeJS.Timeout | null>(null);
+  const gameLoopRef = useRef<any>(null);
   const nextDirectionRef = useRef<Direction>('UP');
 
   // Handle keyboard inputs
@@ -31,19 +31,19 @@ export const Snake: React.FC = () => {
       
       switch (e.key) {
         case 'ArrowUp':
-          if (direction !== 'DOWN') nextDirectionRef.current = 'UP';
+          if (nextDirectionRef.current !== 'DOWN') nextDirectionRef.current = 'UP';
           e.preventDefault();
           break;
         case 'ArrowDown':
-          if (direction !== 'UP') nextDirectionRef.current = 'DOWN';
+          if (nextDirectionRef.current !== 'UP') nextDirectionRef.current = 'DOWN';
           e.preventDefault();
           break;
         case 'ArrowLeft':
-          if (direction !== 'RIGHT') nextDirectionRef.current = 'LEFT';
+          if (nextDirectionRef.current !== 'RIGHT') nextDirectionRef.current = 'LEFT';
           e.preventDefault();
           break;
         case 'ArrowRight':
-          if (direction !== 'LEFT') nextDirectionRef.current = 'RIGHT';
+          if (nextDirectionRef.current !== 'LEFT') nextDirectionRef.current = 'RIGHT';
           e.preventDefault();
           break;
         default:
@@ -53,13 +53,19 @@ export const Snake: React.FC = () => {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [direction, isPlaying, isGameOver]);
+  }, [isPlaying, isGameOver]);
+
+  // Reference to avoid stale closures in setInterval
+  const moveSnakeRef = useRef(moveSnake);
+  useEffect(() => {
+    moveSnakeRef.current = moveSnake;
+  });
 
   // Main Game Loop
   useEffect(() => {
     if (isPlaying && !isGameOver) {
       gameLoopRef.current = setInterval(() => {
-        moveSnake();
+        moveSnakeRef.current();
       }, speed);
     } else {
       if (gameLoopRef.current) clearInterval(gameLoopRef.current);
@@ -68,7 +74,7 @@ export const Snake: React.FC = () => {
     return () => {
       if (gameLoopRef.current) clearInterval(gameLoopRef.current);
     };
-  }, [isPlaying, isGameOver, snake, direction, speed]);
+  }, [isPlaying, isGameOver, speed]);
 
   const generateFood = (currentSnake: Position[]): Position => {
     let newFood: Position;
@@ -85,6 +91,7 @@ export const Snake: React.FC = () => {
 
   const moveSnake = () => {
     setSnake((prevSnake) => {
+      if (!prevSnake || prevSnake.length === 0) return prevSnake;
       const head = { ...prevSnake[0] };
       const currentDir = nextDirectionRef.current;
       setDirection(currentDir);
@@ -174,7 +181,7 @@ export const Snake: React.FC = () => {
               const y = Math.floor(idx / CELL_COUNT);
               
               const isSnakeCell = snake.some(cell => cell.x === x && cell.y === y);
-              const isSnakeHead = snake[0].x === x && snake[0].y === y;
+              const isSnakeHead = snake[0] && snake[0].x === x && snake[0].y === y;
               const isFoodCell = food.x === x && food.y === y;
 
               return (
