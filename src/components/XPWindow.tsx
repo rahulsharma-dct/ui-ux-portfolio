@@ -14,6 +14,7 @@ interface XPWindowProps {
   initialHeight?: number;
   minWidth?: number;
   minHeight?: number;
+  zIndex?: number;
   children: React.ReactNode;
 }
 
@@ -30,6 +31,7 @@ export const XPWindow: React.FC<XPWindowProps> = ({
   initialHeight = 450,
   minWidth = 300,
   minHeight = 200,
+  zIndex,
   children
 }) => {
   const [position, setPosition] = useState({ x: initialX, y: initialY });
@@ -201,7 +203,7 @@ export const XPWindow: React.FC<XPWindowProps> = ({
         left: 0,
         right: 0,
         bottom: '40px', // Taskbar height
-        zIndex: isActive ? 40 : 20,
+        zIndex: zIndex !== undefined ? zIndex : (isActive ? 40 : 20),
       }
     : {
         position: 'absolute',
@@ -209,14 +211,14 @@ export const XPWindow: React.FC<XPWindowProps> = ({
         top: `${position.y}px`,
         width: `${size.width}px`,
         height: `${size.height}px`,
-        zIndex: isActive ? 40 : 20,
+        zIndex: zIndex !== undefined ? zIndex : (isActive ? 40 : 20),
       };
 
   return (
     <div
       ref={windowRef}
       style={style}
-      onClick={onFocus}
+      onMouseDown={onFocus}
       className={`xp-window flex flex-col ${isActive ? 'border-[#0055e5]' : 'border-[#7697c7] xp-window-inactive'}`}
     >
       {/* Title Bar */}

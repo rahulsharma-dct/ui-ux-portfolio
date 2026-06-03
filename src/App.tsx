@@ -42,12 +42,24 @@ export default function App() {
     // Open Notepad by default to welcome users
     { id: 'about', title: 'Notepad - About Jyoti', icon: '📝', isMinimized: false, initialWidth: 550, initialHeight: 400 }
   ]);
-  const [activeWindowId, setActiveWindowId] = useState<string>('about');
+  const [activeWindowId, rawSetActiveWindowId] = useState<string>('about');
+  const [focusStack, setFocusStack] = useState<string[]>(['about']);
+
+  const setActiveWindowId = (id: string) => {
+    rawSetActiveWindowId(id);
+    if (id) {
+      setFocusStack((prev) => {
+        const filtered = prev.filter((x) => x !== id);
+        return [...filtered, id];
+      });
+    }
+  };
   const [isStartOpen, setIsStartOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   
   // Custom states for wallpapers & custom desktop context menu
   const [currentWallpaper, setCurrentWallpaper] = useState('bliss');
+  const [showBubbles, setShowBubbles] = useState(true);
   const [contextMenu, setContextMenu] = useState<{ x: number; y: number; visible: boolean }>({ x: 0, y: 0, visible: false });
 
   // List of Projects requested
@@ -272,7 +284,7 @@ export default function App() {
       }}
     >
       {/* Dynamic Soap Bubbles Background Screensaver */}
-      <BubbleBackground />
+      {showBubbles && <BubbleBackground />}
 
       {/* Desktop Grid Layout */}
       <div className="absolute inset-0 p-4 flex flex-col flex-wrap gap-4 content-start select-none pb-[50px] z-10">
@@ -306,6 +318,7 @@ export default function App() {
             title={win.title}
             icon={win.icon}
             isActive={activeWindowId === win.id}
+            zIndex={focusStack.indexOf(win.id) !== -1 ? 20 + focusStack.indexOf(win.id) : 20}
             onClose={() => handleCloseApp(win.id)}
             onMinimize={() => handleMinimizeApp(win.id)}
             onFocus={() => setActiveWindowId(win.id)}
@@ -616,6 +629,23 @@ export default function App() {
                         <span className="font-sans font-semibold text-gray-800">{wp.label}</span>
                       </label>
                     ))}
+                  </div>
+
+                  {/* Screensaver Section */}
+                  <h3 className="font-bold text-[#001c70] border-b border-gray-300 pb-2 mb-3 mt-4">Screen Saver Settings</h3>
+                  <div className="p-3 bg-white border border-[#808080] shadow-[inset_1px_1px_1px_rgba(0,0,0,0.1)] rounded">
+                    <label className="flex items-center space-x-2.5 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={showBubbles}
+                        onChange={(e) => setShowBubbles(e.target.checked)}
+                        className="cursor-pointer"
+                      />
+                      <span className="font-sans font-semibold text-gray-800">🧼 Enable Soap Bubbles Screensaver</span>
+                    </label>
+                    <p className="text-[10px] text-gray-500 mt-1.5 ml-6">
+                      (When enabled, click on the desktop background to pop floating bubbles!)
+                    </p>
                   </div>
                 </div>
 
