@@ -11,7 +11,6 @@ export const Snake: React.FC = () => {
     { x: 7, y: 8 }
   ]);
   const [food, setFood] = useState<Position>({ x: 3, y: 3 });
-  const [direction, setDirection] = useState<Direction>('UP');
   const [isPlaying, setIsPlaying] = useState(false);
   const [isGameOver, setIsGameOver] = useState(false);
   const [score, setScore] = useState(0);
@@ -88,12 +87,11 @@ export const Snake: React.FC = () => {
     return newFood!;
   };
 
-  const moveSnake = () => {
+  function moveSnake() {
     setSnake((prevSnake) => {
       if (!prevSnake || prevSnake.length === 0) return prevSnake;
       const head = { ...prevSnake[0] };
       const currentDir = nextDirectionRef.current;
-      setDirection(currentDir);
 
       switch (currentDir) {
         case 'UP': head.y -= 1; break;
@@ -146,7 +144,6 @@ export const Snake: React.FC = () => {
       { x: 7, y: 8 }
     ]);
     setFood({ x: 3, y: 3 });
-    setDirection('UP');
     nextDirectionRef.current = 'UP';
     setScore(0);
     setIsGameOver(false);
