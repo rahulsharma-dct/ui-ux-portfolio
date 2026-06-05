@@ -40,6 +40,17 @@ export const XPWindow: React.FC<XPWindowProps> = ({
   const [isDragging, setIsDragging] = useState(false);
   const [isResizing, setIsResizing] = useState(false);
   const [resizeDirection, setResizeDirection] = useState<string | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect screen size to handle auto-maximize on mobile
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const windowRef = useRef<HTMLDivElement>(null);
   const dragStart = useRef({ x: 0, y: 0 });
@@ -57,7 +68,7 @@ export const XPWindow: React.FC<XPWindowProps> = ({
 
   const handleMouseDown = (e: React.MouseEvent) => {
     onFocus();
-    if (isMaximized) return;
+    if (isMaximized || isMobile) return;
 
     // Only drag from titlebar
     const target = e.target as HTMLElement;
@@ -71,7 +82,7 @@ export const XPWindow: React.FC<XPWindowProps> = ({
 
   const handleResizeMouseDown = (direction: string, e: React.MouseEvent) => {
     onFocus();
-    if (isMaximized) return;
+    if (isMaximized || isMobile) return;
     setIsResizing(true);
     setResizeDirection(direction);
     dragStart.current = { x: e.clientX, y: e.clientY };
@@ -83,7 +94,7 @@ export const XPWindow: React.FC<XPWindowProps> = ({
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      if (isDragging) {
+      if (isDragging && !isMobile) {
         const dx = e.clientX - dragStart.current.x;
         const dy = e.clientY - dragStart.current.y;
         setPosition({
@@ -92,7 +103,7 @@ export const XPWindow: React.FC<XPWindowProps> = ({
         });
       }
 
-      if (isResizing && resizeDirection) {
+      if (isResizing && resizeDirection && !isMobile) {
         const dx = e.clientX - dragStart.current.x;
         const dy = e.clientY - dragStart.current.y;
 
@@ -142,7 +153,7 @@ export const XPWindow: React.FC<XPWindowProps> = ({
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseup', handleMouseUp);
     };
-  }, [isDragging, isResizing, resizeDirection]);
+  }, [isDragging, isResizing, resizeDirection, isMobile]);
 
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
 
@@ -159,6 +170,7 @@ export const XPWindow: React.FC<XPWindowProps> = ({
   }, [activeMenu]);
 
   const toggleMaximize = () => {
+    if (isMobile) return;
     setIsMaximized(!isMaximized);
   };
 
@@ -196,7 +208,9 @@ export const XPWindow: React.FC<XPWindowProps> = ({
     ]
   };
 
-  const style: React.CSSProperties = isMaximized
+  const effectivelyMaximized = isMaximized || isMobile;
+
+  const style: React.CSSProperties = effectivelyMaximized
     ? {
         position: 'absolute',
         top: 0,
@@ -250,21 +264,23 @@ export const XPWindow: React.FC<XPWindowProps> = ({
           </button>
           
           {/* Maximize Button */}
-          <button
-            onMouseDown={(e: React.MouseEvent<HTMLButtonElement>) => e.stopPropagation()}
-            onMouseUp={(e: React.MouseEvent<HTMLButtonElement>) => { e.stopPropagation(); toggleMaximize(); }}
-            className="xp-window-btn xp-btn-max text-white text-[10px] font-bold flex flex-col justify-center items-center cursor-pointer"
-            title={isMaximized ? "Restore" : "Maximize"}
-          >
-            {isMaximized ? (
-              <div className="relative w-2.5 h-2.5">
-                <div className="absolute top-0 right-0 w-2 h-2 border border-white border-t-2"></div>
-                <div className="absolute bottom-0 left-0 w-2 h-2 border border-white border-t-2 bg-[#2671CA]"></div>
-              </div>
-            ) : (
-              <div className="w-2.5 h-2 border border-white border-t-2"></div>
-            )}
-          </button>
+          {!isMobile && (
+            <button
+              onMouseDown={(e: React.MouseEvent<HTMLButtonElement>) => e.stopPropagation()}
+              onMouseUp={(e: React.MouseEvent<HTMLButtonElement>) => { e.stopPropagation(); toggleMaximize(); }}
+              className="xp-window-btn xp-btn-max text-white text-[10px] font-bold flex flex-col justify-center items-center cursor-pointer"
+              title={isMaximized ? "Restore" : "Maximize"}
+            >
+              {isMaximized ? (
+                <div className="relative w-2.5 h-2.5">
+                  <div className="absolute top-0 right-0 w-2 h-2 border border-white border-t-2"></div>
+                  <div className="absolute bottom-0 left-0 w-2 h-2 border border-white border-t-2 bg-[#2671CA]"></div>
+                </div>
+              ) : (
+                <div className="w-2.5 h-2 border border-white border-t-2"></div>
+              )}
+            </button>
+          )}
 
           {/* Close Button */}
           <button

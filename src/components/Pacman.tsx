@@ -228,9 +228,39 @@ export const Pacman: React.FC = () => {
           )}
         </div>
 
+        {/* On-screen D-pad for touch/mobile screens */}
+        <div className="flex sm:hidden flex-col items-center justify-center space-y-1 p-2 bg-[#E1DFD3] border border-[#A0A0A0] rounded shadow-xs w-full max-w-[240px] mx-auto select-none">
+          <button
+            onClick={() => movePacman(-1, 0)}
+            className="xp-btn-classic w-12 h-10 font-bold text-base flex items-center justify-center rounded active:scale-90"
+          >
+            ▲
+          </button>
+          <div className="flex space-x-6">
+            <button
+              onClick={() => movePacman(0, -1)}
+              className="xp-btn-classic w-12 h-10 font-bold text-base flex items-center justify-center rounded active:scale-90"
+            >
+              ◀
+            </button>
+            <button
+              onClick={() => movePacman(0, 1)}
+              className="xp-btn-classic w-12 h-10 font-bold text-base flex items-center justify-center rounded active:scale-90"
+            >
+              ▶
+            </button>
+          </div>
+          <button
+            onClick={() => movePacman(1, 0)}
+            className="xp-btn-classic w-12 h-10 font-bold text-base flex items-center justify-center rounded active:scale-90"
+          >
+            ▼
+          </button>
+        </div>
+
         {/* Action guidelines footer */}
         <div className="text-[9.5px] text-gray-500 text-center leading-tight">
-          💡 <strong>Controls:</strong> Navigate using the keyboard Arrow Keys.
+          💡 <strong>Controls:</strong> Navigate using the keyboard Arrow Keys or the touch pad.
         </div>
 
       </div>

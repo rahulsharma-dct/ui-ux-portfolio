@@ -228,6 +228,36 @@ export const Snake: React.FC = () => {
           )}
         </div>
 
+        {/* On-screen D-pad for touch/mobile screens */}
+        <div className="flex sm:hidden flex-col items-center justify-center space-y-1 p-2 bg-[#E1DFD3] border border-[#A0A0A0] rounded shadow-xs w-full max-w-[240px] mx-auto select-none">
+          <button
+            onClick={() => { if (nextDirectionRef.current !== 'DOWN') nextDirectionRef.current = 'UP'; }}
+            className="xp-btn-classic w-12 h-10 font-bold text-base flex items-center justify-center rounded active:scale-90"
+          >
+            ▲
+          </button>
+          <div className="flex space-x-6">
+            <button
+              onClick={() => { if (nextDirectionRef.current !== 'RIGHT') nextDirectionRef.current = 'LEFT'; }}
+              className="xp-btn-classic w-12 h-10 font-bold text-base flex items-center justify-center rounded active:scale-90"
+            >
+              ◀
+            </button>
+            <button
+              onClick={() => { if (nextDirectionRef.current !== 'LEFT') nextDirectionRef.current = 'RIGHT'; }}
+              className="xp-btn-classic w-12 h-10 font-bold text-base flex items-center justify-center rounded active:scale-90"
+            >
+              ▶
+            </button>
+          </div>
+          <button
+            onClick={() => { if (nextDirectionRef.current !== 'UP') nextDirectionRef.current = 'DOWN'; }}
+            className="xp-btn-classic w-12 h-10 font-bold text-base flex items-center justify-center rounded active:scale-90"
+          >
+            ▼
+          </button>
+        </div>
+
         {/* Side Control panel */}
         <div className="w-full sm:w-[130px] bg-[#ECE9D8] border border-[#808080] p-3 rounded flex flex-col justify-between shadow-xs select-none">
           <div className="space-y-3.5">

@@ -20,7 +20,7 @@ export const StartMenu: React.FC<StartMenuProps> = ({
 
   return (
     <div 
-      className="absolute bottom-10 left-0 w-[430px] rounded-t-8 shadow-2xl border-4 border-[#0053eb] z-50 flex flex-col font-sans text-xs select-none"
+      className="absolute bottom-10 left-0 w-full max-w-[430px] rounded-t-8 shadow-2xl border-4 border-[#0053eb] z-50 flex flex-col font-sans text-xs select-none"
       style={{
         boxShadow: '0 10px 30px rgba(0,0,0,0.5)',
         backgroundColor: '#1c7df2'
@@ -42,7 +42,7 @@ export const StartMenu: React.FC<StartMenuProps> = ({
       </div>
 
       {/* Main Body (Two Columns) */}
-      <div className="flex bg-white flex-grow border-b border-[#0036a6] min-h-[360px]">
+      <div className="flex bg-white flex-grow border-b border-[#0036a6] max-h-[calc(100vh-140px)] overflow-y-auto">
         {/* Left Side: White Background, Pinned Programs */}
         <div className="w-1/2 p-1.5 flex flex-col justify-between">
           <div className="space-y-0.5">

@@ -287,7 +287,7 @@ export default function App() {
       {showBubbles && <BubbleBackground />}
 
       {/* Desktop Grid Layout */}
-      <div className="absolute inset-0 p-4 flex flex-col flex-wrap gap-4 content-start select-none pb-[50px] z-10">
+      <div className="absolute inset-0 p-4 pb-[60px] z-10 overflow-y-auto grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:flex lg:flex-col lg:flex-wrap lg:content-start gap-4 select-none justify-items-center">
         {desktopIcons.map((di) => (
           <div
             key={di.id}

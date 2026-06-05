@@ -224,6 +224,17 @@ export const BrickBreaker: React.FC = () => {
     }
   };
 
+  const handleTouchMove = (e: React.TouchEvent<HTMLCanvasElement>) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const rect = canvas.getBoundingClientRect();
+    const touch = e.touches[0];
+    const relativeX = (touch.clientX - rect.left) * (canvas.width / rect.width);
+    if (relativeX > 0 && relativeX < canvas.width) {
+      paddleX.current = Math.max(0, Math.min(canvas.width - paddleWidth, relativeX - paddleWidth / 2));
+    }
+  };
+
   return (
     <div className="flex flex-col h-full bg-[#ECE9D8] text-xs font-sans text-black select-none">
       
@@ -246,6 +257,7 @@ export const BrickBreaker: React.FC = () => {
             width={300}
             height={200}
             onMouseMove={handleMouseMove}
+            onTouchMove={handleTouchMove}
             className="cursor-none w-full h-full object-contain"
           ></canvas>
 
@@ -298,7 +310,7 @@ export const BrickBreaker: React.FC = () => {
 
         {/* Instructions footer text */}
         <div className="text-[9.5px] text-gray-500 text-center leading-tight">
-          💡 <strong>Controls:</strong> Slide your mouse inside the game window box left and right to control the blue paddle.
+          💡 <strong>Controls:</strong> Slide your mouse or swipe your finger left and right on the screen to control the blue paddle.
         </div>
 
       </div>

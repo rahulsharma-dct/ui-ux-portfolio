@@ -321,6 +321,46 @@ export const SpaceInvaders: React.FC = () => {
           )}
         </div>
 
+        {/* On-screen controls for mobile/touch screens */}
+        <div className="flex sm:hidden items-center justify-center space-x-6 p-2 bg-[#E1DFD3] border border-[#A0A0A0] rounded shadow-xs w-full max-w-[280px] mx-auto select-none">
+          <button
+            onTouchStart={() => { keysPressed.current['ArrowLeft'] = true; }}
+            onTouchEnd={() => { keysPressed.current['ArrowLeft'] = false; }}
+            onMouseDown={() => { keysPressed.current['ArrowLeft'] = true; }}
+            onMouseUp={() => { keysPressed.current['ArrowLeft'] = false; }}
+            className="xp-btn-classic w-12 h-10 font-bold text-base flex items-center justify-center rounded active:scale-90"
+          >
+            ◀
+          </button>
+          
+          <button
+            onClick={() => {
+              if (isPlaying && !isGameOver && !isGameWon) {
+                lasers.current.push({
+                  x: shipX.current + shipWidth / 2,
+                  y: canvasHeight - shipHeight - 8,
+                  radius: 2,
+                  speed: 4,
+                  isAlive: true
+                });
+              }
+            }}
+            className="xp-btn-classic px-4 h-10 font-bold text-xs flex items-center justify-center rounded active:scale-90 text-red-700"
+          >
+            🔥 Fire
+          </button>
+
+          <button
+            onTouchStart={() => { keysPressed.current['ArrowRight'] = true; }}
+            onTouchEnd={() => { keysPressed.current['ArrowRight'] = false; }}
+            onMouseDown={() => { keysPressed.current['ArrowRight'] = true; }}
+            onMouseUp={() => { keysPressed.current['ArrowRight'] = false; }}
+            className="xp-btn-classic w-12 h-10 font-bold text-base flex items-center justify-center rounded active:scale-90"
+          >
+            ▶
+          </button>
+        </div>
+
         {/* Action guidelines footer */}
         <div className="text-[9.5px] text-gray-500 text-center leading-tight">
           💡 <strong>Controls:</strong> Steering with Left / Right Arrows. Laser launch with Spacebar.

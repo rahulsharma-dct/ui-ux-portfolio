@@ -278,9 +278,19 @@ export const DinoRun: React.FC = () => {
           )}
         </div>
 
+        {/* Mobile Jump Button */}
+        <div className="flex sm:hidden w-full max-w-[200px] justify-center">
+          <button
+            onClick={handleJump}
+            className="xp-btn-classic w-full py-2.5 font-bold text-xs rounded active:scale-95 text-black"
+          >
+            Jump 🚀
+          </button>
+        </div>
+
         {/* Action guidelines footer */}
         <div className="text-[9.5px] text-gray-500 text-center leading-tight">
-          💡 <strong>Controls:</strong> Press Spacebar or Arrow Up, or left-click inside the window to jump.
+          💡 <strong>Controls:</strong> Press Spacebar or Arrow Up, click canvas, or tap the Jump button to jump.
         </div>
 
       </div>
